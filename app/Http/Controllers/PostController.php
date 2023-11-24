@@ -142,6 +142,20 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Storage::disk('public')->delete(
+            str_replace(
+                '/storage/',
+                '',
+                $post->image
+            )
+        );
+
+        $post->delete();
+        $output = [
+            'success' => true,
+            'msg' => "Post deleted"
+        ];
+        
+        return $output;
     }
 }

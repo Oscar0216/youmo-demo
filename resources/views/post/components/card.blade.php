@@ -1,4 +1,3 @@
-<a href="{{ route('posts.edit', $post)}}" class="edit_post">
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div>
             <img src='{{ asset($post->image) }}' style='height: 50%; width: 50%; object-fit: cover;'>
@@ -10,6 +9,7 @@
             <p class="mt-1 max-w-2xl text-lg text-gray-500">
                 {{ $post->description }}
             </p>
+            <a href="{{ route('posts.edit', $post)}}" class="btn btn-primary edit_post">Edit</a>
+            <button data-href="{{ route('posts.destroy', $post)}}" class="btn btn-danger delete_post">Delete</a>
         </div>
     </div>
-</a>

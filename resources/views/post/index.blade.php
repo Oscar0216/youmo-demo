@@ -20,11 +20,11 @@
     </div>
     <div class="col-span-12">
         <div class='px-2 pb-6 grid grid-cols-12 gap-6'>
-        @foreach ($posts as $post)
-            <div class="col-span-12 sm:col-span-6 lg:col-span-4">
-                @include('post/components/card', ['post' => $post])
-            </div>
-        @endforeach
+            @foreach ($posts as $post)
+                <div class="col-span-12 sm:col-span-6 lg:col-span-4">
+                    @include('post/components/card', ['post' => $post])
+                </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -52,7 +52,8 @@
         crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    
     <script type="text/javascript">
         $(document).ready( function(){
             $(document).on('click', '.btn-modal', function(e) {
@@ -92,6 +93,32 @@
                 editPost($(this).attr('href'));
             });
 
+
+            $(document).on('click', 'button.delete_post', function() {
+                swal({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                }).then(willDelete => {
+                    if (willDelete) {
+                        var href = $(this).data('href');
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            method: 'DELETE',
+                            url: href,
+                            dataType: 'json',
+                            success: function(result) {
+                                setTimeout(function(){
+                                    window.location.reload();
+                                }, 1000);
+                            },
+                        });
+                    }
+                });
+            });
         });
         
 
