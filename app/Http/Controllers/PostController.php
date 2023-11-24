@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -15,7 +16,8 @@ class PostController extends Controller
     public function index()
     {
 
-        $posts = POST::all();
+        $posts = POST::where('active', true)
+                    ->get();
 
         return view('post.index', [
             'posts' => $posts,
@@ -39,9 +41,31 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+
+        try {
+            $inputs = $request->validated();
+
+            if (isset($inputs['image'])){
+                unset($inputs["image"]);
+
+                $name = time().'_'.$request->file('image')->getClientOriginalName();
+                $path = '/storage/'. $request->file('image')->storeAs(
+                    'post', 
+                    $name,
+                    'public'
+                );
+        
+                $inputs["image"] = $path;
+            }
+            $post = Post::create($inputs);
+        } catch (\Throwable $th) {
+            \Log::emergency("File:" . $th->getFile(). ", Line:" . $th->getLine(). ", Message:" . $th->getMessage());
+            return redirect()->route('posts.index')->withErrors("Create post failed!");
+        }
+
+        return redirect('posts');
     }
 
     /**

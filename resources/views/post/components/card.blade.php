@@ -1,7 +1,7 @@
 <a href="">
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div>
-            <img src='{{ asset($post->image) }}' style='height: 200px; width: 100%; object-fit: cover;'>
+            <img src='{{ asset($post->image) }}' style='height: 50%; width: 50%; object-fit: cover;'>
         </div>
         <div class="px-4 py-5 sm:px-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900">
