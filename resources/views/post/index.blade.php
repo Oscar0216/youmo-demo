@@ -71,13 +71,27 @@
             });
 
             $('.post_modal').on('shown.bs.modal', function(e) {
-                $('form#post_add_form')
+                $('form#post_add_form, form#post_edit_form')
                     .validate({
                         rules: {
                             title: "required"
                         },
                     });
             });
+
+            const editPost = (templateUrl) => {
+                console.log( templateUrl);
+                $('div.post_modal').load(templateUrl, function() {
+                    $(this).modal('show');
+                });
+            }
+
+            $(document).on('click', '.edit_post', function(e) {
+                e.preventDefault();
+                
+                editPost($(this).attr('href'));
+            });
+
         });
         
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -87,8 +88,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
-        return view('post.edit');
+        return view('post.edit', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -98,9 +100,38 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(StorePostRequest $request, Post $post)
     {
-        //
+        try {
+            $inputs = $request->validated();
+
+            if (isset($inputs['image'])){
+                unset($inputs["image"]);
+
+                Storage::disk('public')->delete(
+                    str_replace(
+                        '/storage/',
+                        '',
+                        $post->image
+                    )
+                );
+    
+                $name = time().'_'.$request->file('image')->getClientOriginalName();
+                $path = '/storage/'. $request->file('image')->storeAs(
+                    'post', 
+                    $name,
+                    'public'
+                );
+        
+                $inputs["image"] = $path;
+            }
+            $post->update($inputs);
+        } catch (\Throwable $th) {
+            \Log::emergency("File:" . $th->getFile(). ", Line:" . $th->getLine(). ", Message:" . $th->getMessage());
+            return redirect()->route('posts.index')->withErrors("Update post failed!");
+        }
+
+        return redirect('posts');
     }
 
     /**

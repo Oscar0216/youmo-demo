@@ -1,4 +1,4 @@
-<a href="">
+<a href="{{ route('posts.edit', $post)}}" class="edit_post">
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div>
             <img src='{{ asset($post->image) }}' style='height: 50%; width: 50%; object-fit: cover;'>
