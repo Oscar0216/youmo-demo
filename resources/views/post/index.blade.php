@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="col-span-12">
-        <div class='px-2 pb-6 grid grid-cols-12 gap-6'>
+        <div class='px-2 pb-6 grid grid-cols-12 gap-6 post_list'>
             @foreach ($posts as $post)
                 <div class="col-span-12 sm:col-span-6 lg:col-span-4">
                     @include('post/components/card', ['post' => $post])
@@ -138,23 +138,52 @@
                 });
             });
 
-            $(document).on('change', 
-                            `#order_filter`, 
-                            function(){
-                                var create_sort = $('#order_filter').val();
-                                window.location.href = base_url + "/posts" + "?create_sort=" + create_sort;
-                            }
+            $(document).on(
+                'change', 
+                `#order_filter`, 
+                function(){
+                    var create_sort = $('#order_filter').val();
+                    var search = $('#search_field').val();
+
+                    $.ajax({
+                        method: 'GET',
+                        url: 'api/v1/posts',
+                        data: {
+                            create_sort: create_sort,
+                            search: search
+                        },
+                        dataType: 'json',
+                        success: function(result) {
+                            console.log(result);
+                            $('.post_list').html(result.html);
+                        },
+                    });
+                }
             );
 
-            var timer, delay = 500;
+            var timer, delay = 800;
             $(document).on(
                 'input', 
                 `#search_field`, 
                 function(){
                     clearTimeout(timer);
                     timer = setTimeout(function() {
+                        var create_sort = $('#order_filter').val();
                         var search = $('#search_field').val();
-                        window.location.href = base_url + "/posts" + "?search=" + search;
+
+                        $.ajax({
+                            method: 'GET',
+                            url: 'api/v1/posts',
+                            data: {
+                                create_sort: create_sort,
+                                search: search
+                            },
+                            dataType: 'json',
+                            success: function(result) {
+                                console.log(result);
+                                $('.post_list').html(result.html);
+                            },
+                        });
                     }, delay);
                 }
             );

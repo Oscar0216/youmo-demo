@@ -19,17 +19,35 @@ class PostController extends Controller
 
         $query = POST::where('active', true);
 
-        if($request->has('create_sort')){
-            $sort = $request->input('create_sort');
-            $query->orderBy('created_at', $sort);
-        }
+        if ($request->ajax()) {
 
-        if($request->has('search')){
-            $search = $request->input('search');
-            $query->where(function ($query) use ($search) {
-                $query->where('title', 'like', '%' . $search .'%');
-                $query->orWhere('description', 'like', '%' . $search .'%');
-            });
+            if($request->has('create_sort')){
+                $sort = $request->input('create_sort');
+                if(!empty($sort)){
+                    $query->orderBy('created_at', $sort);
+                }
+            }
+
+            if($request->has('search')){
+                $search = $request->input('search');
+                if(!empty($search)){
+                    $query->where(function ($query) use ($search) {
+                        $query->where('title', 'like', '%' . $search .'%');
+                        $query->orWhere('description', 'like', '%' . $search .'%');
+                    });
+                }
+            }
+
+            $posts = $query->get();
+            $html = view('post.components.filter', [
+                'posts' => $posts,
+            ])->render();
+
+            $output = [
+                'html' => $html
+            ];
+
+            return $output;
         }
         
         $posts = $query->get();
