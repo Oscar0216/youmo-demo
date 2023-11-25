@@ -19,7 +19,6 @@ class PostController extends Controller
     public function index(Request $request)
     {
 
-        App::setLocale('ce');
 
         $query = POST::where('active', true);
 
@@ -68,7 +67,6 @@ class PostController extends Controller
      */
     public function create()
     {
-        App::setLocale('ce');
 
         //
         return view('post.create');
@@ -126,7 +124,6 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        App::setLocale('ce');
         return view('post.edit', [
             'post' => $post
         ]);

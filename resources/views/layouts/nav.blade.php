@@ -5,14 +5,14 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="/">
+                    <a href="{{ route('posts.index') }}">
                         <p>Youmo Demo</p>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="">
+                    <x-nav-link href="{{ route('posts.index') }}">
                         所有Post
                     </x-nav-link>
                 </div>

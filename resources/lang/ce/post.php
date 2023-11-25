@@ -27,5 +27,6 @@ return [
     'inactive' => '不發佈',
     'close' => '關閉',
     'save' => '儲存',
+    'none' => '沒有',
 
 ];
