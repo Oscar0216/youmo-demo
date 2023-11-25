@@ -14,11 +14,25 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $posts = POST::where('active', true)
-                    ->get();
+        $query = POST::where('active', true);
+
+        if($request->has('create_sort')){
+            $sort = $request->input('create_sort');
+            $query->orderBy('created_at', $sort);
+        }
+
+        if($request->has('search')){
+            $search = $request->input('search');
+            $query->where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search .'%');
+                $query->orWhere('description', 'like', '%' . $search .'%');
+            });
+        }
+        
+        $posts = $query->get();
 
         return view('post.index', [
             'posts' => $posts,

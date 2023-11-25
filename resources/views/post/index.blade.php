@@ -16,6 +16,23 @@
                 <i class="fa fa-plus"></i> 
                 Create
             </button>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="order_filter">Sort</label>
+                    <select class="form-control" id="order_filter" name="order_filter">
+                        <option selected="selected" value="">沒有</option>
+                        <option value="asc">建立時間(遞增)</option>
+                        <option value="desc">建立時間(遞減)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="search_field">Search</label>
+                    <input type="text" name="search_field" id="search_field" class="form-control" placeholder="Search" aria-required="true">
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-span-12">
@@ -56,6 +73,8 @@
     
     <script type="text/javascript">
         $(document).ready( function(){
+            var base_url = window.location.origin;
+
             $(document).on('click', '.btn-modal', function(e) {
                 e.preventDefault();
                 var container = $(this).data('container');
@@ -81,7 +100,6 @@
             });
 
             const editPost = (templateUrl) => {
-                console.log( templateUrl);
                 $('div.post_modal').load(templateUrl, function() {
                     $(this).modal('show');
                 });
@@ -119,6 +137,27 @@
                     }
                 });
             });
+
+            $(document).on('change', 
+                            `#order_filter`, 
+                            function(){
+                                var create_sort = $('#order_filter').val();
+                                window.location.href = base_url + "/posts" + "?create_sort=" + create_sort;
+                            }
+            );
+
+            var timer, delay = 500;
+            $(document).on(
+                'input', 
+                `#search_field`, 
+                function(){
+                    clearTimeout(timer);
+                    timer = setTimeout(function() {
+                        var search = $('#search_field').val();
+                        window.location.href = base_url + "/posts" + "?search=" + search;
+                    }, delay);
+                }
+            );
         });
         
 
