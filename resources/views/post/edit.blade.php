@@ -12,19 +12,19 @@
                 <div class="row">            
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label for="title">標題:*</label>
+                            <label for="title">{{ __('post.title') }}:*</label>
                             <input type="text" name="title" id="title" class="form-control" value='{{  $post->title }}' required="" placeholder="title" aria-required="true">
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label for="description">描述:</label>
+                            <label for="description">{{ __('post.description') }}:</label>
                             <textarea name="description" id="description" cols="50" rows="10" class="form-control" aria-hidden="true">{{  $post->description }}</textarea>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-group">
-                            <label for="image">圖片:</label>
+                            <label for="image">{{ __('post.image') }}:</label>
                             <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-user"></i>
@@ -39,13 +39,13 @@
                             <div class="flex items-center">
                                 <input type="radio" name="active" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" value='1' {{ ($post->active ? "checked" : "") }}>
                                 <label class="ml-3 block text-sm font-medium text-gray-700">
-                                    Active
+                                    {{ __('post.active') }}
                                 </label>
                             </div>
                             <div class="flex items-center">
                                 <input type="radio" name="active" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" value='0' {{ ($post->active ? "" : "checked") }}>
                                 <label class="ml-3 block text-sm font-medium text-gray-700">
-                                    Inactive
+                                    {{ __('post.inactive') }}
                                 </label>
                             </div>
                         </div>
@@ -54,8 +54,8 @@
             </div>
         
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('post.close') }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('post.save') }}</button>
             </div>
         </form>
     </div><!-- /.modal-content -->

@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\App;
+
 
 class PostController extends Controller
 {
@@ -16,6 +18,8 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+
+        App::setLocale('ce');
 
         $query = POST::where('active', true);
 
@@ -64,6 +68,8 @@ class PostController extends Controller
      */
     public function create()
     {
+        App::setLocale('ce');
+
         //
         return view('post.create');
     }
@@ -120,6 +126,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        App::setLocale('ce');
         return view('post.edit', [
             'post' => $post
         ]);

@@ -14,22 +14,22 @@
                 data-href="{{ route('posts.create') }}" 
                 data-container=".post_modal">
                 <i class="fa fa-plus"></i> 
-                Create
+                {{ __('post.create') }}
             </button>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="order_filter">Sort</label>
+                    <label for="order_filter"> {{ __('post.sort') }}</label>
                     <select class="form-control" id="order_filter" name="order_filter">
                         <option selected="selected" value="">沒有</option>
-                        <option value="asc">建立時間(遞增)</option>
-                        <option value="desc">建立時間(遞減)</option>
+                        <option value="asc">{{ __('post.create_asc') }}</option>
+                        <option value="desc">{{ __('post.create_desc') }}</option>
                     </select>
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="search_field">Search</label>
+                    <label for="search_field"> {{ __('post.search') }}</label>
                     <input type="text" name="search_field" id="search_field" class="form-control" placeholder="Search" aria-required="true">
                 </div>
             </div>

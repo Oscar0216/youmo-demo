@@ -9,7 +9,7 @@
             <p class="mt-1 max-w-2xl text-lg text-gray-500">
                 {{ $post->description }}
             </p>
-            <a href="{{ route('posts.edit', $post)}}" class="btn btn-primary edit_post">Edit</a>
-            <button data-href="{{ route('posts.destroy', $post)}}" class="btn btn-danger delete_post">Delete</a>
+            <a href="{{ route('posts.edit', $post)}}" class="btn btn-primary edit_post">{{ __('post.edit') }}</a>
+            <button data-href="{{ route('posts.destroy', $post)}}" class="btn btn-danger delete_post">{{ __('post.delete') }}</a>
         </div>
     </div>
