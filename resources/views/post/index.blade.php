@@ -139,7 +139,6 @@
                         },
                         dataType: 'json',
                         success: function(result) {
-                            console.log(result);
                             $('.post_list').html(result.html);
                         },
                     });
@@ -165,7 +164,6 @@
                             },
                             dataType: 'json',
                             success: function(result) {
-                                console.log(result);
                                 $('.post_list').html(result.html);
                             },
                         });
